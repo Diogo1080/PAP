@@ -99,11 +99,25 @@
         //Busca o id do sócio
           $id_contribuinte=$insert_contribuinte->insert_id;
     //Se for atleta
-      }elseif($_POST['tipo_contribuinte']=="Atleta"){    
+      }elseif($_POST['tipo_contribuinte']=="Atleta"){
+        $hashed_password=NULL;
+        $num_socio=NULL;
+
+        if (isset($_POST['num_atleta'][1])) {
+          $num_socio=$_POST['num_atleta'][0].$_POST['num_atleta'][1];
+        }
+
+        if (isset($_POST['password_atleta'])) {
+          if (!empty($_POST['password_atleta'])) {
+            $hashed_password=password_hash($_POST['password_atleta'], PASSWORD_DEFAULT);
+          }else{
+            $hashed_password=password_hash('1234', PASSWORD_DEFAULT);
+          }
+        }    
         //prepara as variaveis
           $metodo_pagamento="No clube";   
         //Prepara os dados para insert do Atleta.
-          $insert_contribuinte->bind_param("bssiiiiiissssssssssd",$foto,$null,$null,$_POST['cc'],$_POST['nif'],$_POST['telemovel'],$_POST['telefone'],$cp,$receber_email,$_POST['tipo_contribuinte'],$_POST['morada'],$_POST['localidade'],$_POST['freguesia'],$_POST['concelho'],$_POST['nome'],$_POST['sexo'],$_POST['email'],$metodo_pagamento,$_POST['dt_nasc'],$_POST['mensalidade_valor_atleta']);
+          $insert_contribuinte->bind_param("bssiiiiiissssssssssd",$foto,$num_socio,$hashed_password,$_POST['cc'],$_POST['nif'],$_POST['telemovel'],$_POST['telefone'],$cp,$receber_email,$_POST['tipo_contribuinte'],$_POST['morada'],$_POST['localidade'],$_POST['freguesia'],$_POST['concelho'],$_POST['nome'],$_POST['sexo'],$_POST['email'],$metodo_pagamento,$_POST['dt_nasc'],$_POST['mensalidade_valor_atleta']);
         //Verifica se tem foto se sim coloca a selecionada
         //Se nao coloca-a pelo sexo.
           if (is_uploaded_file($_FILES["foto"]["tmp_name"])){
@@ -281,9 +295,25 @@
       }elseif($_POST['tipo_contribuinte']=="Atleta"){
         //prepara as variaveis
           $metodo_pagamento="No clube";   
-
-        //Prepara os dados para update do Atleta.
-          $update_contribuinte->bind_param("bssiiiiiissssssssssdi",$foto,$null,$null,$_POST['cc'],$_POST['nif'],$_POST['telemovel'],$_POST['telefone'],$cp,$receber_email,$linha['tipo_contribuinte'],$_POST['morada'],$_POST['localidade'],$_POST['freguesia'],$_POST['concelho'],$_POST['nome'],$_POST['sexo'],$_POST['email'],$metodo_pagamento,$_POST['dt_nasc'],$_POST['mensalidade_valor_atleta'],$_POST['id_contribuinte']);
+ 
+          $hashed_password=NULL;
+          $num_socio=NULL;
+          
+          if (isset($_POST['num_atleta'][1])) {
+            $num_socio=$_POST['num_atleta'][0].$_POST['num_atleta'][1];
+          }
+          
+          if (isset($_POST['password_atleta'])) {
+            if (!empty($_POST['password_atleta'])) {
+              $hashed_password=password_hash($_POST['password_atleta'], PASSWORD_DEFAULT);
+              //Prepara os dados para update do Sócio.
+                $update_contribuinte->bind_param("bssiiiiiissssssssssdi",$foto,$num_socio,$hashed_password,$_POST['cc'],$_POST['nif'],$_POST['telemovel'],$_POST['telefone'],$cp,$receber_email,$linha['tipo_contribuinte'],$_POST['morada'],$_POST['localidade'],$_POST['freguesia'],$_POST['concelho'],$_POST['nome'],$_POST['sexo'],$_POST['email'],$metodo_pagamento,$_POST['dt_nasc'],$_POST['mensalidade_valor_atleta'],$_POST['id_contribuinte']);
+            }else{
+              $update_contribuinte=$con->prepare("UPDATE `contribuintes` SET `foto`=? ,`num_socio`=?,`cc`=?,`nif`=?,`telemovel`=?,`telefone`=?,`cp`=?,`receber_email`=?,`tipo_contribuinte`=?,`morada`=?,`localidade`=?,`freguesia`=?,`concelho`=?,`nome`=?,`sexo`=?,`email`=?,`metodo_pagamento`=?,`dt_nasc`=?,`mensalidade_valor`=? WHERE `id_contribuinte`=?");
+              //Prepara os dados para update do Sócio.
+                $update_contribuinte->bind_param("bssiiiiiissssssssssdi",$foto,$num_socio,$_POST['cc'],$_POST['nif'],$_POST['telemovel'],$_POST['telefone'],$cp,$receber_email,$linha['tipo_contribuinte'],$_POST['morada'],$_POST['localidade'],$_POST['freguesia'],$_POST['concelho'],$_POST['nome'],$_POST['sexo'],$_POST['email'],$metodo_pagamento,$_POST['dt_nasc'],$_POST['mensalidade_valor_atleta'],$_POST['id_contribuinte']);
+            }
+          }
 
         //Verifica se tem foto se sim coloca-a se nao coloca-a pelo sexo.
           if (is_uploaded_file($_FILES["foto"]["tmp_name"])){
@@ -847,6 +877,36 @@
         <h3 class="panel-title">Informações relativas ao atleta</h3>
       </div>
       <div class="card-body">
+        <!-- Stor de PSI chato-->
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Numero de Atleta:</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text"> 
+                  <input hidden class="form-control" name="num_atleta[]" value="J">
+                  J
+                </div>
+              </div>
+              <input class="form-control  input_socio" name="num_atleta[]" maxlength="10" onkeypress="return sonumeros(event)" value="<?php 
+                if (isset($_GET['id_contribuinte'])) {
+                  $num=explode("J",$linha['num_socio']);
+                  echo (end($num));
+                }elseif (isset($_POST['insert']) || isset($_POST['update'])){
+                  echo($_POST['num_socio']);
+                } 
+              ?>">
+              </div>
+          </div>
+          <div class="form-group col-md-6">
+            <?php if (isset($is_socio)) {?>
+              <label>Definir nova palavra-passe:</label>
+            <?php }else{ ?>
+              <label>Palavra-passe:</label>
+            <?php } ?>
+              <input class="form-control input_socio" id="password" type="password" name="password_atleta">
+          </div>
+        </div>
         <!--Valor da mensalidade e da joia-->
         <div class="row">
           <div class="form-group col-md-6">

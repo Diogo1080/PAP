@@ -87,7 +87,6 @@
   }
   function definir_tipo(value){
     tipo=value;
-    alert(tipo);
   }
   function first_page(){
     num_pagina=1;

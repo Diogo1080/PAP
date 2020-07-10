@@ -60,11 +60,31 @@
             $_SESSION['permissao']=3;
             ?>
               <script type="text/javascript">
-                window.location.href = "socio_perfil.php?id_contribuinte=<?php echo $_SESSION['id'] ?>"
+                window.location.href = "perfil.php?id_contribuinte=<?php echo $_SESSION['id'] ?>"
               </script>
             <?php
           }
         }
+    }elseif (strpos($_POST['username'], 'J') !== false) {
+      //prepara a query para o login do admin,define a procura
+        $querry = $con->prepare("SELECT * FROM contribuintes WHERE num_socio = ?");
+        $querry -> bind_param("s",$_POST['username']);
+        $querry -> execute();
+        $resultado=$querry->get_result();
+
+        if ($resultado->num_rows <> 0) {
+          $linha=$resultado->fetch_assoc();
+          if (password_verify($_POST['password'],$linha['password'])) {
+            $_SESSION['id']=$linha['id_contribuinte'];
+            $_SESSION['nome']=$linha['nome'];
+            $_SESSION['permissao']=3;
+            ?>
+              <script type="text/javascript">
+                window.location.href = "perfil.php?id_contribuinte=<?php echo $_SESSION['id'] ?>"
+              </script>
+            <?php
+          }
+      }
     }
     ?>
       <script>
