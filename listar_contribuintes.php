@@ -24,10 +24,14 @@
             </div> 
             <div class="col-lg-4 col-md-6 col-sm-12 col-xs-6 ">
                 <select class="form-control" onchange="definir_tipo(this.value);tabela_contribuintes(num_pagina,procura,tipo);">
-                  <option value="">Todos os contribuintes</option>
-                  <option>Sócio</option>
-                  <option>Atleta</option>
-                  <option>Encarregado de educação</option>
+                  <?php if ($_SESSION ['permissao']==2) { ?>
+                     <option>Atleta</option>
+                  <?php }else{ ?>
+                    <option value="">Todos os contribuintes</option>
+                    <option>Sócio</option>
+                    <option>Atleta</option>
+                    <option>Encarregado de educação</option>
+                  <?php } ?>
                 </select>
             </div>
           </div>
@@ -53,12 +57,6 @@
         </div>
     </div>
    
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   </body>
 </html>
     <script src="//code.jquery.com/jquery.min.js"></script>
@@ -66,7 +64,9 @@
   var procura='';
   var num_pagina=1;
   var tipo='';
-
+</script>
+<?php if ($_SESSION['permissao']==2) {?><script type="text/javascript"> tipo="Atleta"</script><?php } ?>
+<script type="text/javascript">
   function tabela_contribuintes(num_pagina,procura,tipo){
     $.post(
       'tabela_contribuintes.php', 
@@ -87,6 +87,7 @@
   }
   function definir_tipo(value){
     tipo=value;
+    alert(tipo);
   }
   function first_page(){
     num_pagina=1;
@@ -107,6 +108,8 @@
   function last_page(){
     num_pagina=total_num_paginas;
   }
+
+
 
   tabela_contribuintes(num_pagina,procura,tipo);
 </script>

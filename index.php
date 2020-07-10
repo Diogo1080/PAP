@@ -31,7 +31,6 @@
         $querry -> bind_param("s",$_POST['username']);
         $querry -> execute();
         $resultado=$querry->get_result();
-
         if ($resultado->num_rows <> 0){
           $linha=$resultado->fetch_assoc();
           if (password_verify($_POST['password'],$linha['password'])) {
@@ -56,12 +55,12 @@
         if ($resultado->num_rows <> 0) {
           $linha=$resultado->fetch_assoc();
           if (password_verify($_POST['password'],$linha['password'])) {
-            $_SESSION['id']=$linha['id_colaborador'];
+            $_SESSION['id']=$linha['id_contribuinte'];
             $_SESSION['nome']=$linha['nome'];
             $_SESSION['permissao']=3;
             ?>
               <script type="text/javascript">
-                window.location.href = "dashboard.php"
+                window.location.href = "socio_perfil.php?id_contribuinte=<?php echo $_SESSION['id'] ?>"
               </script>
             <?php
           }
@@ -69,8 +68,8 @@
     }
     ?>
       <script>
-        window.alert("Nenhum username encontrado!");
-        //window.location.href = "index.php";
+        window.alert("Password ou username incorretos!");
+        window.location.href = "index.php";
       </script>
     <?php
     if (isset($querry)) {
