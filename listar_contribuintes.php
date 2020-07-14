@@ -6,7 +6,7 @@
       <?php include('navbar_dashboard.php'); ?>
 
       <!-- Tables dos colaboradores -->
-      <div class="col-sm-12">
+
         <div class="card"style="margin-top: 30px">
           <div class="card-header"> 
             <div class="row">
@@ -24,10 +24,14 @@
             </div> 
             <div class="col-lg-4 col-md-6 col-sm-12 col-xs-6 ">
                 <select class="form-control" onchange="definir_tipo(this.value);tabela_contribuintes(num_pagina,procura,tipo);">
-                  <option value="">Todos os contribuintes</option>
-                  <option>Sócio</option>
-                  <option>Atleta</option>
-                  <option>Encarregado de educação</option>
+                  <?php if ($_SESSION ['permissao']==2) { ?>
+                     <option>Atleta</option>
+                  <?php }else{ ?>
+                    <option value="">Todos os contribuintes</option>
+                    <option>Sócio</option>
+                    <option>Atleta</option>
+                    <option>Encarregado de educação</option>
+                  <?php } ?>
                 </select>
             </div>
           </div>
@@ -51,7 +55,6 @@
             
           </div>
         </div>
-      </div>
     </div>
    
   </body>
@@ -61,7 +64,9 @@
   var procura='';
   var num_pagina=1;
   var tipo='';
-
+</script>
+<?php if ($_SESSION['permissao']==2) {?><script type="text/javascript"> tipo="Atleta"</script><?php } ?>
+<script type="text/javascript">
   function tabela_contribuintes(num_pagina,procura,tipo){
     $.post(
       'tabela_contribuintes.php', 
@@ -102,6 +107,8 @@
   function last_page(){
     num_pagina=total_num_paginas;
   }
+
+
 
   tabela_contribuintes(num_pagina,procura,tipo);
 </script>
