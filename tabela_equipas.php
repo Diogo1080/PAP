@@ -47,14 +47,6 @@
 						<tr>
 							<th scope="col">Nome</th>
 							<th scope="col">Escalao</th>
-							';
-							if ($_SESSION['permissao']==1) {
-								echo '
-									<th scope="col">Estado</th>
-									<th scope="col">Ativar/desativar</th>
-								';
-							}
-							echo '
 							<th scope="col">Selecionar</th>
 						</tr>
 					</thead>
@@ -70,37 +62,7 @@
 							echo '
 							<tr>
 								<td>'.$linha['nome'].'</td>
-								<td>'.$linha['escalao'].'</td>';
-							if ($_SESSION['permissao']==1) {
-								echo '
-									<td>';
-										if ($linha['estado']==1) {
-											echo "Ativa";
-										}else{
-											echo "Desativada";
-										}
-										echo '
-									</td>
-									<td>';
-									if ($linha['estado']==1) {
-										$acao='0';
-									}else{
-										$acao='1';
-									}
-									echo '
-										<button onclick="if (confirm(\'Tem acerteza que quer desativar a equipa '.$linha['nome'].'?\nEsta ação irá remover os atletas atuais desta equipa. \')) {window.location.href=\'ativar_desativar_equipas.php?id_equipa='.$linha['id_equipa'].'&acao='.$acao.'\'}" class="btn btn-danger">'; 
-										if ($linha['estado']==1) {
-											echo "Desativar";
-										}else{
-											echo "Ativar";
-										}
-									echo '
-										</button>
-									</td>
-								';
-
-							}
-							echo '
+								<td>'.$linha['escalao'].'</td>
 								<td><button class="btn btn-default" onclick="window.location.href=\'equipa.php?id_equipa='.$linha['id_equipa'].'\'">Selecionar</button></td>
 							</tr>
 							';

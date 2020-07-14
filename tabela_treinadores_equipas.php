@@ -55,18 +55,7 @@
 						echo '
 						<tr>
 							<td>'.$linha['nome'].'</td>
-							<td>';
-								if (isset($_SESSION['array_treinador'])) {
-									if (in_array($linha['id_recurso_humano'], $_SESSION['array_treinador'])) {
-										echo '<input checked type="checkbox" onclick="selecionar_treinador(\'0\',\''.$linha['id_recurso_humano'].'\',\''.$linha['nome'].'\');">';
-									}else{
-										echo '<input type="checkbox" onclick="selecionar_treinador(\'1\',\''.$linha['id_recurso_humano'].'\',\''.$linha['nome'].'\');">';
-									}
-								}else{
-									echo '<input type="checkbox" onclick="selecionar_treinador(\'1\',\''.$linha['id_recurso_humano'].'\',\''.$linha['nome'].'\');">';
-								}
-								echo '
-							</td>
+							<td><input name="treinador" value="'.$linha['id_recurso_humano'].'" type="radio"></td>
 						</tr>
 						';
 					}

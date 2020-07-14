@@ -2,15 +2,6 @@
   //Prepara a ligação
     require ('ligacao.php');
 
-    if ($_SESSION['permissao']==2) {
-      if (!isset($_GET['id_contribuinte'])) {
-       ?>
-       <script type="text/javascript">
-          window.location.href="listar_contribuintes.php"       
-        </script>
-       <?php
-      }
-    }
     unset($_SESSION['array_atletas']);
   //Se um contribuinte estiver selecionado prepara os dados do mesmo
   if (isset($_GET['id_contribuinte'])) {
@@ -66,10 +57,10 @@
       if ($_POST['tipo_contribuinte']=="Sócio") {
 
         $hashed_password=NULL;
-        $num_socio=NULL;
+        $num_colaborador=NULL;
 
-        if (isset($_POST['num_socio'][1])) {
-          $num_socio=$_POST['num_socio'][0].$_POST['num_socio'][1];
+        if (isset($_POST['num_colaborador'][1])) {
+          $num_colaborador=$_POST['num_colaborador'][0].$_POST['num_colaborador'][1];
         }
 
         if (isset($_POST['password'])) {
@@ -99,25 +90,11 @@
         //Busca o id do sócio
           $id_contribuinte=$insert_contribuinte->insert_id;
     //Se for atleta
-      }elseif($_POST['tipo_contribuinte']=="Atleta"){
-        $hashed_password=NULL;
-        $num_socio=NULL;
-
-        if (isset($_POST['num_atleta'][1])) {
-          $num_socio=$_POST['num_atleta'][0].$_POST['num_atleta'][1];
-        }
-
-        if (isset($_POST['password_atleta'])) {
-          if (!empty($_POST['password_atleta'])) {
-            $hashed_password=password_hash($_POST['password_atleta'], PASSWORD_DEFAULT);
-          }else{
-            $hashed_password=password_hash('1234', PASSWORD_DEFAULT);
-          }
-        }    
+      }elseif($_POST['tipo_contribuinte']=="Atleta"){    
         //prepara as variaveis
           $metodo_pagamento="No clube";   
         //Prepara os dados para insert do Atleta.
-          $insert_contribuinte->bind_param("bssiiiiiissssssssssd",$foto,$num_socio,$hashed_password,$_POST['cc'],$_POST['nif'],$_POST['telemovel'],$_POST['telefone'],$cp,$receber_email,$_POST['tipo_contribuinte'],$_POST['morada'],$_POST['localidade'],$_POST['freguesia'],$_POST['concelho'],$_POST['nome'],$_POST['sexo'],$_POST['email'],$metodo_pagamento,$_POST['dt_nasc'],$_POST['mensalidade_valor_atleta']);
+          $insert_contribuinte->bind_param("bssiiiiiissssssssssd",$foto,$null,$null,$_POST['cc'],$_POST['nif'],$_POST['telemovel'],$_POST['telefone'],$cp,$receber_email,$_POST['tipo_contribuinte'],$_POST['morada'],$_POST['localidade'],$_POST['freguesia'],$_POST['concelho'],$_POST['nome'],$_POST['sexo'],$_POST['email'],$metodo_pagamento,$_POST['dt_nasc'],$_POST['mensalidade_valor_atleta']);
         //Verifica se tem foto se sim coloca a selecionada
         //Se nao coloca-a pelo sexo.
           if (is_uploaded_file($_FILES["foto"]["tmp_name"])){
@@ -265,10 +242,10 @@
       if ($_POST['tipo_contribuinte']=="Sócio") {
         
         $hashed_password=NULL;
-        $num_socio=NULL;
+        $num_colaborador=NULL;
         
-        if (isset($_POST['num_socio'][1])) {
-          $num_socio=$_POST['num_socio'][0].$_POST['num_socio'][1];
+        if (isset($_POST['num_colaborador'][1])) {
+          $num_colaborador=$_POST['num_colaborador'][0].$_POST['num_colaborador'][1];
         }
         
         if (isset($_POST['password'])) {
@@ -295,25 +272,9 @@
       }elseif($_POST['tipo_contribuinte']=="Atleta"){
         //prepara as variaveis
           $metodo_pagamento="No clube";   
- 
-          $hashed_password=NULL;
-          $num_socio=NULL;
-          
-          if (isset($_POST['num_atleta'][1])) {
-            $num_socio=$_POST['num_atleta'][0].$_POST['num_atleta'][1];
-          }
-          
-          if (isset($_POST['password_atleta'])) {
-            if (!empty($_POST['password_atleta'])) {
-              $hashed_password=password_hash($_POST['password_atleta'], PASSWORD_DEFAULT);
-              //Prepara os dados para update do Sócio.
-                $update_contribuinte->bind_param("bssiiiiiissssssssssdi",$foto,$num_socio,$hashed_password,$_POST['cc'],$_POST['nif'],$_POST['telemovel'],$_POST['telefone'],$cp,$receber_email,$linha['tipo_contribuinte'],$_POST['morada'],$_POST['localidade'],$_POST['freguesia'],$_POST['concelho'],$_POST['nome'],$_POST['sexo'],$_POST['email'],$metodo_pagamento,$_POST['dt_nasc'],$_POST['mensalidade_valor_atleta'],$_POST['id_contribuinte']);
-            }else{
-              $update_contribuinte=$con->prepare("UPDATE `contribuintes` SET `foto`=? ,`num_socio`=?,`cc`=?,`nif`=?,`telemovel`=?,`telefone`=?,`cp`=?,`receber_email`=?,`tipo_contribuinte`=?,`morada`=?,`localidade`=?,`freguesia`=?,`concelho`=?,`nome`=?,`sexo`=?,`email`=?,`metodo_pagamento`=?,`dt_nasc`=?,`mensalidade_valor`=? WHERE `id_contribuinte`=?");
-              //Prepara os dados para update do Sócio.
-                $update_contribuinte->bind_param("bssiiiiiissssssssssdi",$foto,$num_socio,$_POST['cc'],$_POST['nif'],$_POST['telemovel'],$_POST['telefone'],$cp,$receber_email,$linha['tipo_contribuinte'],$_POST['morada'],$_POST['localidade'],$_POST['freguesia'],$_POST['concelho'],$_POST['nome'],$_POST['sexo'],$_POST['email'],$metodo_pagamento,$_POST['dt_nasc'],$_POST['mensalidade_valor_atleta'],$_POST['id_contribuinte']);
-            }
-          }
+
+        //Prepara os dados para update do Atleta.
+          $update_contribuinte->bind_param("bssiiiiiissssssssssdi",$foto,$null,$null,$_POST['cc'],$_POST['nif'],$_POST['telemovel'],$_POST['telefone'],$cp,$receber_email,$linha['tipo_contribuinte'],$_POST['morada'],$_POST['localidade'],$_POST['freguesia'],$_POST['concelho'],$_POST['nome'],$_POST['sexo'],$_POST['email'],$metodo_pagamento,$_POST['dt_nasc'],$_POST['mensalidade_valor_atleta'],$_POST['id_contribuinte']);
 
         //Verifica se tem foto se sim coloca-a se nao coloca-a pelo sexo.
           if (is_uploaded_file($_FILES["foto"]["tmp_name"])){
@@ -709,7 +670,7 @@
         </div>
         <div class="form-group">
           <label for="email">E-Mail</label>
-          <input type="email" class="form-control" placeholder="Insira o seu E-Mail" required name="email" minlength="3" maxlength="60" type="email" value="<?php 
+          <input type="email" class="form-control" placeholder="Insira o seu E-Mail" required name="email" minlength="3" maxlength="60" onblur="return emailcheck(this.value)" value="<?php 
             if (isset($_GET['id_contribuinte'])) {
               echo($linha['email']);
             }elseif (isset($_POST['insert']) || isset($_POST['update'])){
@@ -755,14 +716,13 @@
             <div class="input-group">
               <div class="input-group-prepend">
                 <div class="input-group-text"> 
-                  <input hidden class="form-control" name="num_socio[]" value="S">
+                  <input hidden class="form-control  input_socio" name="num_socio[]" value="S">
                   S
                 </div>
               </div>
               <input class="form-control  input_socio" name="num_socio[]" maxlength="10" onkeypress="return sonumeros(event)" value="<?php 
                 if (isset($_GET['id_contribuinte'])) {
-                  $num=explode("S",$linha['num_socio']);
-                  echo (end($num));
+                  echo($linha['num_socio']);
                 }elseif (isset($_POST['insert']) || isset($_POST['update'])){
                   echo($_POST['num_socio']);
                 } 
@@ -771,11 +731,10 @@
           </div>
           <div class="form-group col-md-6">
             <?php if (isset($is_socio)) {?>
-              <label>Definir nova palavra-passe:</label>
+              <label>Definir nova palavra-passe:</label><input class="form-control input_socio" id="password" type="password" name="password">
             <?php }else{ ?>
-              <label>Palavra-passe:</label>
+              <label>Palavra-passe:</label><input class="form-control input_socio" id="password" type="password" name="password">
             <?php } ?>
-              <input class="form-control input_socio" id="password" type="password" name="password">
           </div>
         </div>
         <!--Valor da quota mensal e metodo de pagamento-->
@@ -877,36 +836,6 @@
         <h3 class="panel-title">Informações relativas ao atleta</h3>
       </div>
       <div class="card-body">
-        <!-- Stor de PSI chato-->
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label>Numero de Atleta:</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text"> 
-                  <input hidden class="form-control" name="num_atleta[]" value="J">
-                  J
-                </div>
-              </div>
-              <input class="form-control  input_socio" name="num_atleta[]" maxlength="10" onkeypress="return sonumeros(event)" value="<?php 
-                if (isset($_GET['id_contribuinte'])) {
-                  $num=explode("J",$linha['num_socio']);
-                  echo (end($num));
-                }elseif (isset($_POST['insert']) || isset($_POST['update'])){
-                  echo($_POST['num_socio']);
-                } 
-              ?>">
-              </div>
-          </div>
-          <div class="form-group col-md-6">
-            <?php if (isset($is_socio)) {?>
-              <label>Definir nova palavra-passe:</label>
-            <?php }else{ ?>
-              <label>Palavra-passe:</label>
-            <?php } ?>
-              <input class="form-control input_socio" id="password" type="password" name="password_atleta">
-          </div>
-        </div>
         <!--Valor da mensalidade e da joia-->
         <div class="row">
           <div class="form-group col-md-6">
@@ -1368,7 +1297,7 @@
           <div class="row">
             <div class="col-md-12">
               <label>Email:</label>
-                <input id="email_enc" maxlength="60" class="input_enc required form-control" minlength="3" maxlength="60" name="email_enc" type="email" value="<?php 
+                <input id="email_enc" maxlength="60" class="input_enc required form-control" minlength="3" maxlength="60" name="email_enc" onblur="return emailcheck(this.value)" value="<?php 
                   if (isset($is_atleta)) {
                     echo($linha_enc['email']);
                   }elseif (isset($_POST['insert']) || isset($_POST['update'])){
@@ -1408,12 +1337,11 @@
       <div class="alert alert-primary">
         <div>
           <?php if (isset($_GET['id_contribuinte'])) {?>
-            <input class="btn btn-default" type="submit" id="btn_atualizar" name="update" value="Atualizar">
+            <input class="btn btn-default" type="submit" name="update" value="Atualizar">
           <?php }else{?>
-            <input class="btn btn-default" type="submit" id="btn_inserir" name="insert" value="Inserir">
-          <?php }if ($_SESSION['permissao']==1){ ?>
-            <button class="btn btn-default" type="button" onclick="window.location.href ='contribuintes.php'">Limpar</button>
+            <input class="btn btn-default" type="submit" name="insert" value="Inserir">
           <?php } ?>
+          <button class="btn btn-default" type="button" onclick="window.location.href ='contribuintes.php'">Limpar</button>
         </div>
       </div>
     </div>
@@ -1740,14 +1668,6 @@
       return (charCode === 32) || (charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122) || (charCode >= 192 && charCode <= 255)
     }
 
-    function letras_numeros(evt){
-      evt = (evt) ? evt : window.event;
-      var charCode=(evt.which) ? evt.which : evt.keyCode;
-      if ((charCode==32) || (charCode==186) || (charCode>=65 && charCode<=90) || (charCode>=97 && charCode<=122) || (charCode>=192 && charCode<=255) || (charCode >= 48 && charCode <= 57)) {
-        return true;
-      }
-        return false;
-    }
 
     function moradacheck(evt) {
       let confirmar = letras_numeros(evt)
@@ -1919,25 +1839,4 @@
           <?php
         }
     }
-  
-if ($_SESSION['permissao']==2) {
-    ?>
-      <script type="text/javascript">
-        let todos_inputs=document.getElementsByTagName("input");
-        for (var i = 0; i < todos_inputs.length; i++) {
-          todos_inputs[i].disabled=true
-        }
-        todos_inputs=document.getElementsByTagName("select");
-        for (var i = 0; i < todos_inputs.length; i++) {
-          todos_inputs[i].disabled=true
-        }
-        todos_inputs=document.getElementsByTagName("textarea");
-        for (var i = 0; i < todos_inputs.length; i++) {
-          todos_inputs[i].disabled=true
-        }
-        document.getElementById("btn_atualizar").disabled=true;
-
-      </script>
-    <?php
-  }
   ?>
