@@ -1,10 +1,11 @@
+/* Body styles gerais */
 body {
 	background: linear-gradient(-45deg, #003249, #21659e, #23a6d5, #23d5ab);
 	background-size: 300% 300%;
 	-webkit-animation: gradient 12s ease infinite;
 	        animation: gradient 12s ease infinite;
 }
-
+/* Animação do gradient */
 @-webkit-keyframes gradient {
 	0% {
 		background-position: 0% 50%;
@@ -16,7 +17,6 @@ body {
 		background-position: 0% 50%;
 	}
 }
-
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
@@ -28,16 +28,20 @@ body {
 		background-position: 0% 50%;
 	}
 }
+/* Cor fixa para a pag de login */
+.login-bg{
+	background-color: #21659e;
+}
 h1, h2, h3 {
 	color:#ffffff;
 
 	}
 
 li a{
-	color: #85FFC7 ;
+	color: #21659e ;
 }
 li a:hover{
-	color: #297373;
+	color: #21659e;
 }
 
 p {
@@ -55,13 +59,16 @@ header{
 
 
 a{
-	color: #85FFC7 ;
+	color: #21659e ;
 }
 
 a:hover{
 	color: #297373;
 }
-
+.card-body{
+	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+	
+}
 .card-body p {
 
 	color: #39393a;
