@@ -616,7 +616,7 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="sexo">Sexo</label>
-                <select id="sexo" name="sexo" class="form-control" onchange="mudar_imagem()">
+                <select id="sexo" name="sexo" class="form-control selects" onchange="mudar_imagem()">
                   <option value="Masculino">Masculino</option>
                   <option value="Feminino">Feminino</option>
                 </select>
@@ -626,7 +626,7 @@
                 <?php if (isset($_GET['id_contribuinte'])) { ?>
                   <input hidden name="tipo_contribuinte" value="<?php echo($linha['tipo_contribuinte']); ?>">
                 <?php }?>
-                <select class="form-control" id="tipo_contribuinte" name="tipo_contribuinte" required onchange="mostrar_campos(this.value);">
+                <select class="form-control selects" id="tipo_contribuinte" name="tipo_contribuinte" required onchange="mostrar_campos(this.value);">
                   <option disabled selected value> -- Escolher uma opção -- </option>
                   <option>Sócio</option>
                   <option>Atleta</option>
@@ -720,7 +720,7 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="telemovel">Telemóvel</label>
-            <input class="form-control" required name="telefone" minlength="9" maxlength="9" onkeypress="return sonumeros(event)" value="<?php 
+            <input class="form-control selects" required name="telefone" minlength="9" maxlength="9" onkeypress="return sonumeros(event)" value="<?php 
               if (isset($_GET['id_contribuinte'])) {
                 echo($linha['telemovel']);
               }elseif (isset($_POST['insert']) || isset($_POST['update'])){
@@ -730,7 +730,7 @@
           </div>
           <div class="form-group col-md-6">
             <label for="telefone">Telefone</label>
-            <input class="form-control" required name="telemovel" minlength="9" maxlength="9" onkeypress="return sonumeros(event)" value="<?php 
+            <input class="form-control selects" required name="telemovel" minlength="9" maxlength="9" onkeypress="return sonumeros(event)" value="<?php 
               if (isset($_GET['id_contribuinte'])) {
                 echo($linha['telefone']);
               }elseif (isset($_POST['insert']) || isset($_POST['update'])){

@@ -34,8 +34,7 @@ body {
 }
 h1, h2, h3 {
 	color:#ffffff;
-
-	}
+}
 
 li a{
 	color: #21659e ;
@@ -65,6 +64,47 @@ a{
 a:hover{
 	color: #297373;
 }
+/* Inputs para texto */
+input[type=text] {
+	width: 100%;
+  padding: .25rem .25rem;
+  border-radius: 0;
+  font-weight: 300;
+  transition: .25s linear outline, .25s linear border;
+  outline: 8px solid transparent;
+  border: 1px solid rgba(52, 152, 219,.5);
+}
+/* Inputs para email */
+input[type=email] {
+	width: 100%;
+  padding: .25rem .25rem;
+  border-radius: 0;
+  font-weight: 300;
+  transition: .25s linear outline, .25s linear border;
+  outline: 8px solid transparent;
+  border: 1px solid rgba(52, 152, 219,.5);
+}
+/* Inputs para data */
+input[type=date] {
+	width: 100%;
+  padding: .25rem .25rem;
+  border-radius: 0;
+  font-weight: 300;
+  transition: .25s linear outline, .25s linear border;
+  outline: 8px solid transparent;
+  border: 1px solid rgba(52, 152, 219,.5);
+}
+/* Opcoes para selects e campos gerais */
+.selects {
+	width: 100%;
+  padding: .25rem .25rem;
+  border-radius: 0;
+  font-weight: 300;
+  transition: .25s linear outline, .25s linear border;
+  outline: 8px solid transparent;
+  border: 1px solid rgba(52, 152, 219,.5);
+}
+
 .card-body{
 	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 	
