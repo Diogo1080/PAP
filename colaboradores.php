@@ -460,7 +460,7 @@
 							<!-- Nome -->
 									<div class="form-group col-md-6">
 										<label for="inputEmail4">Nome</label>
-										<input required class="form-control" maxlength="60" name="nome" onkeypress="return soletras(event)" value="<?php 
+										<input required class="form-control" type="text" maxlength="60" name="nome" onkeypress="return soletras(event)" value="<?php 
 										if (isset($_GET['id_colaborador'])) {
 										echo($linha['nome']);
 										}elseif (isset($_POST['insert']) || isset($_POST['update'])){
@@ -484,7 +484,7 @@
 							<!-- Sexo -->
 									<div class="form-group col-md-6">
 										<label for="inputPassword4">Sexo</label>
-										<select id="sexo" class="form-control" name="sexo" onchange="mudar_imagem()">
+										<select id="sexo" class="form-control selects" name="sexo" onchange="mudar_imagem()">
 											<option value="Masculino">Masculino</option>
 											<option value="Feminino">Feminino</option>
 										</select>
@@ -507,7 +507,7 @@
 							<!-- Nif -->
 									<div class="form-group col-md-6">
 										<label for="inputEmail4">NIF</label>
-											<input required class="form-control" name="nif" minlength="9" maxlength="9" onkeypress="return sonumeros(event)" value="<?php 
+											<input required class="form-control selects" name="nif" minlength="9" maxlength="9" onkeypress="return sonumeros(event)" value="<?php 
 											if (isset($_GET['id_colaborador'])) {
 											echo($linha['nif']);
 											}elseif (isset($_POST['insert']) || isset($_POST['update'])){
@@ -522,7 +522,7 @@
 											<div class="input-group-prepend">
 												<div class="input-group-text">€</div>
 											</div>
-											<input class="form-control" name="salario" onkeypress="return sonumeros(event)" value="<?php 
+											<input class="form-control selects" name="salario" onkeypress="return sonumeros(event)" value="<?php 
 												if (isset($_GET['id_colaborador'])) {
 												echo($linha['salario']);
 												}elseif (isset($_POST['insert']) || isset($_POST['update'])){
@@ -757,7 +757,7 @@
 						<!-- Email -->
 						<div class="form-group">
 							<label for="inputAddress2">E-Mail</label>
-							<input required type="E-Mail" class="form-control" placeholder="Insira o seu E-Mail" minlength="3" maxlength="60" name="email" value="<?php 
+							<input required type="email" class="form-control" placeholder="Insira o seu E-Mail" minlength="3" maxlength="60" name="email" value="<?php 
 								if (isset($_GET['id_colaborador'])) {
 								echo($linha['email']);
 								}elseif (isset($_POST['insert']) || isset($_POST['update'])){
@@ -934,7 +934,7 @@
 					</div>
 				</div>
 				<div class="d-flex justify-content-center" style=" margin-top:25px;">
-					<div class="alert alert-primary">
+					<div class="alert alert-light">
 						<?php if (!isset($_GET['id_colaborador'])) { ?>
 							<input type="submit" class="btn btn-default" name="insert" value="Inserir dados">
 						<?php }else{ ?>

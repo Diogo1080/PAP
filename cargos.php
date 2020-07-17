@@ -120,39 +120,37 @@
             <div class="card-body">
 				<form method="POST" enctype="multipart/form-data">
 					<!--form de inserir o cargo-->
-					<div>
+					<div class="row">
 						<!--Form secundario-->
-							<div>
+							<div class="col-md-6">
 								<label>Nome do cargo:
-									<input class="form-control" name="cargo" value="<?php
+									<input class="form-control selects" name="cargo" value="<?php
 											if (isset($_GET['id_cargo'])) {
 												echo($linha['cargo']);
 											} elseif (isset($_POST['insert']) || isset($_POST['update'])) {
 												echo($_POST['cargo']);
 											}
-										?>"><br>
+										?>">
 								</label>
 							</div>
 								<!--Form secundario-->
-							<div>
-								<label>Treinador:
+							<div class="col-md-6">
+											<strong style="padding-bottom:10px;">Permissões do Cargo</strong><br>
+								<label>Treinador:</label>
 									<input name="is_treinador" id="is_treinador" type="checkbox"><br>
-								</label>
-							</div>
-								<!--Form secundario-->
-							<div>
-								<label>Login:
+								
+								<label>Login:</label>
 									<input name="get_login" id="get_login" type="checkbox"><br>
-								</label>
+								
 							</div>
 					</div>
-					<div>
+					<div class="d-flex justify-content-center" style="margin-top:20px">
 						<?php if (isset($_GET['id_cargo'])) {?>
-							<input type="submit" name="update" value="Atualizar">
+							<input type="submit" name="update" value="Atualizar" class="btn btn-default">
 						<?php } else {?>
-							<input type="submit" name="insert" value="Inserir">
+							<input type="submit" name="insert" value="Inserir" class="btn btn-default">
 						<?php } ?>
-						<button type="button" onclick="window.location.href='cargos.php'">Limpar</button>
+						<button type="button" onclick="window.location.href='cargos.php'" class="btn btn-default">Limpar</button>
 					</div>
 				</form>
             </div>

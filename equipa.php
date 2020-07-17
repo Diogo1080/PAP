@@ -372,7 +372,7 @@
               </div>
               <div class="col-md-6">
                 <label>Escalão</label>
-              <select required id="escalao" name="escalao" class="form-control" required>
+              <select required id="escalao" name="escalao" class="form-control selects" required>
                   <option selected disabled>--Escolher um escalão--</option>
                   <?php 
                       $escalao=$con->prepare("SELECT * FROM escaloes");
@@ -476,7 +476,7 @@
                 <br>
             </div>
             <div class="col-md-6">
-                <select type="text" class="form-control" onchange="definir_equipa_atletas(this.value);tabela_atletas(num_pagina_atletas,procura_atletas,equipa_atletas);">
+                <select type="text" class="form-control selects" onchange="definir_equipa_atletas(this.value);tabela_atletas(num_pagina_atletas,procura_atletas,equipa_atletas);">
                   <option selected value="T"> Todos os atletas</option>
                   <option value="S"> Sem equipa</option>
                   <option value="C"> Com equipas</option>
@@ -525,7 +525,7 @@
         </div>
       </div>
       <div class="d-flex justify-content-center" style=" margin-top:25px;">
-        <div class="alert alert-primary">
+        <div class="alert alert-light">
           <?php if (!isset($_GET['id_equipa'])) { ?>
             <input type="submit" class="btn btn-default" name="insert" value="Inserir dados">
           <?php }else{ ?>

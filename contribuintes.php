@@ -759,7 +759,7 @@
                   S
                 </div>
               </div>
-              <input class="form-control  input_socio" name="num_socio[]" maxlength="10" onkeypress="return sonumeros(event)" value="<?php 
+              <input class="form-control  input_socio selects" name="num_socio[]" maxlength="10" onkeypress="return sonumeros(event)" value="<?php 
                 if (isset($_GET['id_contribuinte'])) {
                   $num=explode("S",$linha['num_socio']);
                   echo (end($num));
@@ -775,7 +775,7 @@
             <?php }else{ ?>
               <label>Palavra-passe:</label>
             <?php } ?>
-              <input class="form-control input_socio" id="password" type="password" name="password">
+              <input class="form-control input_socio selects" id="password" type="password" name="password">
           </div>
         </div>
         <!--Valor da quota mensal e metodo de pagamento-->
@@ -783,7 +783,7 @@
           <div class="form-group col-md-6">
             <label>Valor quota mensal:</label>
             <div class="input-group">
-              <input class="form-control input_socio" name="mensalidade_valor" onkeypress="return sonumeros(event)" value="<?php 
+              <input class="form-control input_socio selects" name="mensalidade_valor" onkeypress="return sonumeros(event)" value="<?php 
                 if (isset($_GET['id_contribuinte'])) {
                   echo($linha['mensalidade_valor']);
                 }elseif (isset($_POST['insert']) || isset($_POST['update'])){
@@ -797,7 +797,7 @@
           </div>
           <div class="form-group col-md-6">
             <label>Metodo de pagamento</label>
-            <select class="form-control input_socio" id="metodo_pagamento" name="metodo_pagamento" class="">
+            <select class="form-control input_socio selects" id="metodo_pagamento" name="metodo_pagamento" class="">
               <option disabled selected value> -- Escolher uma opção -- </option>
               <option>Domicilio</option>
               <option>No clube</option>
@@ -842,7 +842,7 @@
                           ?>">
                     <div class="col-md-6">
                       <label>Nome do atleta:</label>
-                        <input readonly required id="required_edu_nome" class="input_enc required_edu form-control" value="<?php 
+                        <input readonly required id="required_edu_nome" class="input_enc required_edu form-control selects" value="<?php 
                           if (isset($_GET['id_contribuinte'])) {
                             echo($linha_atleta['nome']);
                           }elseif (isset($_POST['insert']) || isset($_POST['update'])){
@@ -852,7 +852,7 @@
                     </div>
                     <div class="col-md-6">
                       <label>CC do atleta:</label>
-                        <input readonly required id="required_edu_cc" class=" input_enc required_edu form-control" value="<?php 
+                        <input readonly required id="required_edu_cc" class=" input_enc required_edu form-control selects" value="<?php 
                           if (isset($_GET['id_contribuinte'])) {
                             echo($linha_atleta['cc']);
                           }elseif (isset($_POST['insert']) || isset($_POST['update'])){
@@ -888,7 +888,7 @@
                   J
                 </div>
               </div>
-              <input class="form-control  input_socio" name="num_atleta[]" maxlength="10" onkeypress="return sonumeros(event)" value="<?php 
+              <input class="form-control  input_socio selects" name="num_atleta[]" maxlength="10" onkeypress="return sonumeros(event)" value="<?php 
                 if (isset($_GET['id_contribuinte'])) {
                   $num=explode("J",$linha['num_socio']);
                   echo (end($num));
@@ -904,14 +904,14 @@
             <?php }else{ ?>
               <label>Palavra-passe:</label>
             <?php } ?>
-              <input class="form-control input_socio" id="password" type="password" name="password_atleta">
+              <input class="form-control input_socio selects" id="password" type="password" name="password_atleta">
           </div>
         </div>
         <!--Valor da mensalidade e da joia-->
         <div class="row">
           <div class="form-group col-md-6">
             <label for="valor_mensalidade">Valor Mensalidade:</label>
-            <input type="text" class="form-control" id="valor_mensalidade" maxlength="11" class="input_atleta" name="mensalidade_valor_atleta" onkeypress="return sonumeros(event)" value="<?php 
+            <input type="text" class="form-control selects" id="valor_mensalidade" maxlength="11" class="input_atleta" name="mensalidade_valor_atleta" onkeypress="return sonumeros(event)" value="<?php 
                 if (isset($is_atleta)) {
                   echo($linha['mensalidade_valor']);
                 }elseif (isset($_POST['insert']) || isset($_POST['update'])){
@@ -921,7 +921,7 @@
           </div>
           <div class="form-group col-md-6">
             <label for="valor_joia">Valor Joia:</label>
-            <input type="text" class="form-control" id="valor_joia" maxlength="11" class="input_atleta" name="valor_joia" onkeypress="return sonumeros(event)" value="<?php 
+            <input type="text" class="form-control selects" id="valor_joia" maxlength="11" class="input_atleta" name="valor_joia" onkeypress="return sonumeros(event)" value="<?php 
               if (isset($is_atleta)) {
                 echo($linha['valor_joia']);
               }elseif (isset($_POST['insert']) || isset($_POST['update'])){
@@ -1405,7 +1405,7 @@
 
     <!--Butões-->
     <div class="d-flex justify-content-center" style=" margin-top:25px;margin-bottom:25px; ">
-      <div class="alert alert-primary">
+      <div class="alert alert-light">
         <div>
           <?php if (isset($_GET['id_contribuinte'])) {?>
             <input class="btn btn-default" type="submit" id="btn_atualizar" name="update" value="Atualizar">
