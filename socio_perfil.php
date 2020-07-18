@@ -21,6 +21,10 @@
   background-blend-mode: overlay;
   
 }
+.socio-card-header{
+  background-color:#21659e;
+  Color: #DFEDF6;
+}
     </style>
     
     <title>Hello, world!</title>
@@ -33,14 +37,14 @@
 
     <!-- Header -->
     <center>
-        <img src="img/panel.png" style="width:40%;">
+        <img src="img/panel.png" style="width:50%; margin-bottom: 15px;margin-top: 8px;">
     </center> 
 
         <!-- Card -->
-        <div class="card">
+        <div class="card-warning">
 
             <!-- Título do Card -->
-            <div class="card-header text-center">
+            <div class="card-header text-center socio-card-header">
               <h4>Bem-Vindo! [Nome de Sócio] - [Nº de Sócio]</h4>
             </div>
 
@@ -143,7 +147,7 @@
             </div>
 
             <!-- Footer do Card -->
-            <div class="card-footer text-center">
+            <div class="card-footer text-center socio-card-header"  style="margin-bottom:30px;">
                 © Estrela Azul FC - 2020
             </div>
 
