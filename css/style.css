@@ -172,3 +172,8 @@ color: #21659e;
 	font-size: 30px;
 	padding: 20px 50px;
 }
+/* Card Socio */
+.socio-card{
+	background-image: url("img/socio.jpg") ;
+	background-color:#CDD4CF;
+}

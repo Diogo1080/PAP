@@ -10,6 +10,18 @@
 
     <!-- Ligação aos links e config da Head -->
     <?php include('head.php'); ?>
+
+    <style>
+/* Card Socio */
+.socio-card{
+  background-image: url("img/socio.jpg") ;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-blend-mode: overlay;
+  
+}
+    </style>
     
     <title>Hello, world!</title>
   </head>
@@ -21,7 +33,7 @@
 
     <!-- Header -->
     <center>
-        <img src="img/panel.png" style="width:60%;">
+        <img src="img/panel.png" style="width:40%;">
     </center> 
 
         <!-- Card -->
@@ -33,7 +45,7 @@
             </div>
 
             <!-- Corpo do Card -->
-            <div class="card-body">
+            <div class="card-body socio-card">
 
                 <div class="row">
 
@@ -61,13 +73,13 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                   <label for="inputEmail4">Sexo</label>
-                                  <select class="form-control">
+                                  <select class="form-control selects">
                                     <option>Default select</option>
                                   </select>
                                 </div>
                                 <div class="form-group col-md-6">
                                   <label for="inputPassword4">Tipo de Utilizador</label>
-                                  <select class="form-control">
+                                  <select class="form-control selects">
                                     <option>Default select</option>
                                   </select>
                                 </div>
