@@ -57,7 +57,7 @@
 
 		//Insert se for treinador de qualquer genero.
 			if (isset($_POST['clubes_anteriores'])) {
-				$insert_treinador=$con->prepare("INSERT INTO `treinadores`(`id_treinador`, `clubles_anteriores`) VALUES(?,?)");
+				$insert_treinador=$con->prepare("INSERT INTO `treinadores`(`id_treinador`, `clubes_anteriores`) VALUES(?,?)");
 				$insert_treinador->bind_param("is",$id,$_POST['clubes_anteriores']);
 				$insert_treinador->execute();
 
@@ -223,7 +223,7 @@
 
 			//Update se for treinador de qualquer genero.
 				if (isset($_POST['clubes_anteriores'])) {
-					$update_treinador=$con->prepare("UPDATE `treinadores` SET `clubles_anteriores`=? WHERE `id_treinador`=?");
+					$update_treinador=$con->prepare("UPDATE `treinadores` SET `clubes_anteriores`=? WHERE `id_treinador`=?");
 					$update_treinador->bind_param("si",$_POST['clubes_anteriores'],$_POST['id_colaborador']);
 					$update_treinador->execute();
 
@@ -598,6 +598,9 @@
 											<?php }else{
 												if ($linha_cargo['is_treinador']==1){
 													$is_treinador=1;
+												} 
+												if ($linha_cargo['get_login']==1){
+													$get_login=1;
 												} ?>
 												<div class="form-check form-check-inline">
 													<label class="form-check-label" for="inlineCheckbox<?php echo($linha_cargo['id_cargo']); ?>">
@@ -639,9 +642,16 @@
 							<input id="login_campo_colaborador" hidden name="num_colaborador[]" disabled class="input_login" value="C">
 							<input disabled value="C">
 						</div>
-						<input onkeypress="return sonumeros(event)" value="<?php if(isset($is_treinador)){$num=explode("T",$linha['num_recurso_humano']);echo (end($num));} ?>" disabled class="input_login" name="num_colaborador[]">
+						<input onkeypress="return sonumeros(event)" value="<?php 
+							if(isset($is_treinador)){
+								$num=explode("T",$linha['num_recurso_humano']);
+								echo (end($num));
+							}elseif(isset($get_login)){
+								$num=explode("C",$linha['num_recurso_humano']);
+								echo (end($num));
+							} ?>" disabled class="input_login" name="num_colaborador[]">
 						<div>
-							<?php if (isset($is_treinador)) {?>
+							<?php if (isset($is_treinador) or isset($get_login)) {?>
 								<label>Definir nova palavra-passe:<input id="password" type="password" disabled class="input_login" name="password"></label>
 							<?php }else{ ?>
 								<label>Palavra-passe:<input id="password" type="password" disabled class="input_login" name="password"></label>
@@ -652,7 +662,51 @@
 
 				<div class="card" id="treinador_campos" style="margin-top:25px;display: none;">
 					<h5 class="card-header">Campos do treinador</h5>
+
 					<div class="card-body">
+						<div class="input-group mb-3">
+					      <div class="custom-file">
+					        <?php 
+					          if (isset($_GET['id_colaborador'])) {
+					            $ficheiros=$con->prepare("SELECT * FROM `ficheiros` WHERE id_recurso_humano=$_GET[id_colaborador]");
+					            $ficheiros->execute();
+					            $resultado=$ficheiros->get_result();
+					            while ($linha_ficheiro=$resultado->fetch_assoc()){
+					              if (strpos($linha_ficheiro['nome'],'Certificado_desportivo')!==false) {
+					                ?>
+					                  <label class="custom-file-label">Atualizar certificado desportivo:</label>
+					                  <input class="custom-file-input" type="file" name="certificado_desportivo" accept=".pdf,.doc">
+					                  </div>
+					                  <div class="input-group-append">
+					                    <span class="input-group-text" id="inputGroupFileAddon02">
+					                    <a href="download_ficheiro.php?id_ficheiro=<?php echo($linha_ficheiro['id_ficheiro']); ?>"> 
+					                        Download
+					                    </a>
+					                    </span>
+					                  </div>
+					                <?php 
+					                $done=1;
+					                break;
+					              }
+					            }
+					            if (!isset($done)) {
+					              ?>
+					                <label class="custom-file-label">Atualizar certificado sbv dae:</label>
+					                <input class="custom-file-input" type="file" name="certificado_desportivo" accept=".pdf,.doc">
+					                </div>
+					              <?php
+					            }else{
+					              unset($done);
+					            }
+					          }else{
+					            ?>
+					              <label class="custom-file-label">Atualizar certificado sbv dae:</label>
+					              <input class="custom-file-input" type="file" name="certificado_desportivo" accept=".pdf,.doc">
+					              </div>
+					            <?php
+					          } 
+					        ?>
+					    </div>
 						<div>
 		            		<?php if (isset($is_treinador)) {
 								$treinador=$con->prepare("SELECT * FROM `treinadores` WHERE id_treinador=?");
@@ -660,35 +714,10 @@
 								$treinador->execute();
 								$resultado_treinador=$treinador->get_result();
 								$linha_treinador=$resultado_treinador->fetch_assoc();
-
-								$ficheiros=$con->prepare("SELECT * FROM `ficheiros` WHERE id_recurso_humano=$_GET[id_colaborador]");
-								$ficheiros->execute();
-								$resultado=$ficheiros->get_result();
-								while ($linha_ficheiro=$resultado->fetch_assoc()){
-									if (strpos($linha_ficheiro['nome'],'Certificado_desportivo')!==false) { ?>
-		                      			<label>Atualizar certificado desportivo:</label>
-										<input type="file" name="Certificado_desportivo" accept=".pdf,.doc">
-										<a href="download_ficheiro.php?id_ficheiro=<?php echo($linha_ficheiro['id_ficheiro']); ?>"> 
-											<label>Download do registo criminal</label>
-										</a>
-										<?php 
-										$done=1;
-										break;
-									}
-								}
-								if (!isset($done)) { ?>
-									<label>Certificado_desportivo:</label>
-										<input type="file" name="Certificado_desportivo" accept=".pdf,.doc">
-								<?php }else{
-									unset($done);
-								}
-							}else{ ?>
-								<label>Certificado_desportivo:</label>
-								<input type="file" name="Certificado_desportivo" accept=".pdf,.doc">
-							<?php } ?>
+							} ?>
 						</div>
 						<div>
-							<label>Clubes anteriores:<textarea disabled class="input_treinador" name="clubes_anteriores"><?php if (isset($is_treinador)) {echo $linha_treinador['clubles_anteriores'];} ?></textarea></label>
+							<label>Clubes anteriores:<textarea disabled class="input_treinador" name="clubes_anteriores"><?php if (isset($is_treinador)) {echo $linha_treinador['clubes_anteriores'];} ?></textarea></label>
 						</div>
 					</div>
 				</div>
@@ -809,7 +838,7 @@
 					              if (strpos($linha_ficheiro['nome'],'Registo_criminal')!==false) {
 					                ?>
 					                  <label class="custom-file-label">Atualizar registo Criminal:</label>
-					                  <input class="custom-file-input" type="file" name="Registo_criminal" accept=".pdf,.doc">
+					                  <input class="custom-file-input" type="file" name="registo_criminal" accept=".pdf,.doc">
 					                  </div>
 					                  <div class="input-group-append">
 					                    <span class="input-group-text" id="inputGroupFileAddon02">
@@ -826,7 +855,7 @@
 					            if (!isset($done)) {
 					              ?>
 					                <label class="custom-file-label">Atualizar registo Criminal:</label>
-					                <input class="custom-file-input" type="file" name="Registo_criminal" accept=".pdf,.doc">
+					                <input class="custom-file-input" type="file" name="registo_criminal" accept=".pdf,.doc">
 					                </div>
 					              <?php
 					            }else{
@@ -835,7 +864,7 @@
 					          }else{
 					            ?>
 					              <label class="custom-file-label">Atualizar registo Criminal:</label>
-					              <input class="custom-file-input" type="file" name="Registo_criminal" accept=".pdf,.doc">
+					              <input class="custom-file-input" type="file" name="registo_criminal" accept=".pdf,.doc">
 					              </div>
 					            <?php
 					          } 
@@ -854,7 +883,7 @@
 					              if (strpos($linha_ficheiro['nome'],'Certificado_academico')!==false) {
 					                ?>
 					                  <label class="custom-file-label">Atualizar certificado academico:</label>
-					                  <input class="custom-file-input" type="file" name="Certificado_academico" accept=".pdf,.doc">
+					                  <input class="custom-file-input" type="file" name="certificado_academico" accept=".pdf,.doc">
 					                  </div>
 					                  <div class="input-group-append">
 					                    <span class="input-group-text" id="inputGroupFileAddon02">
@@ -871,7 +900,7 @@
 					            if (!isset($done)) {
 					              ?>
 					                 <label class="custom-file-label">Atualizar certificado academico:</label>
-					                <input class="custom-file-input" type="file" name="Certificado_academico" accept=".pdf,.doc">
+					                <input class="custom-file-input" type="file" name="certificado_academico" accept=".pdf,.doc">
 					                </div>
 					              <?php
 					            }else{
@@ -880,7 +909,7 @@
 					          }else{
 					            ?>
 					               <label class="custom-file-label">Atualizar certificado academico:</label>
-					              <input class="custom-file-input" type="file" name="Certificado_academico" accept=".pdf,.doc">
+					              <input class="custom-file-input" type="file" name="certificado_academico" accept=".pdf,.doc">
 					              </div>
 					            <?php
 					          } 
@@ -898,7 +927,7 @@
 					              if (strpos($linha_ficheiro['nome'],'Certificado_sbv_dae')!==false) {
 					                ?>
 					                  <label class="custom-file-label">Atualizar certificado sbv dae:</label>
-					                  <input class="custom-file-input" type="file" name="Certificado_sbv_dae" accept=".pdf,.doc">
+					                  <input class="custom-file-input" type="file" name="certificado_sbv_dae" accept=".pdf,.doc">
 					                  </div>
 					                  <div class="input-group-append">
 					                    <span class="input-group-text" id="inputGroupFileAddon02">
@@ -915,7 +944,7 @@
 					            if (!isset($done)) {
 					              ?>
 					                <label class="custom-file-label">Atualizar certificado sbv dae:</label>
-					                <input class="custom-file-input" type="file" name="Certificado_sbv_dae" accept=".pdf,.doc">
+					                <input class="custom-file-input" type="file" name="certificado_sbv_dae" accept=".pdf,.doc">
 					                </div>
 					              <?php
 					            }else{
@@ -924,7 +953,7 @@
 					          }else{
 					            ?>
 					              <label class="custom-file-label">Atualizar certificado sbv dae:</label>
-					              <input class="custom-file-input" type="file" name="Certificado_sbv_dae" accept=".pdf,.doc">
+					              <input class="custom-file-input" type="file" name="certificado_sbv_dae" accept=".pdf,.doc">
 					              </div>
 					            <?php
 					          } 

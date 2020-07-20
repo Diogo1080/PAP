@@ -6,11 +6,10 @@
 
   if (isset($_POST['insert'])) {
     if (isset($_POST['id_treinadores']) && isset($_POST['id_atletas'])) {
-      print_r($_POST);
         $con -> autocommit(FALSE);
       //INSERT DA EQUIPA
-        $insert_equipa=$con->prepare("INSERT INTO `equipas`( `nome`, `cor`, `id_escalao`) VALUES (?,?,?)");
-        $insert_equipa->bind_param('ssi',$_POST['nome'],$_POST['cor'],$_POST['escalao']);
+        $insert_equipa=$con->prepare("INSERT INTO `equipas`( `nome`, `cor`, `id_escalao`,`estado`) VALUES (?,?,?,1)");
+        $insert_equipa->bind_param('ssi',$_POST['nome'],$cor,$_POST['escalao']);
         $insert_equipa->execute();
         $id_equipa=$insert_equipa->insert_id;
       
@@ -85,9 +84,9 @@
     }
   }
   if (isset($_POST['update'])) {
-    # code...
+    # Por fazer!
   }
-?>
+  ?>
 
 <html>
 
@@ -438,26 +437,28 @@
             <div class="col-md-12" id="tabela_treinadores">
 
             </div>
-          </div> 
-          <div class="form-row">
-            <div class="col-md-8 col-sm-8">
-              <button type="button" class="btn btn-default" onclick="first_page_treinador();tabela_treinadores(num_pagina_treinador,procura_treinador); ">
-              <<
-              </button>
-              <button type="button" class="btn btn-default" onclick="prev_page_treinador();tabela_treinadores(num_pagina_treinador,procura_treinador);">
-              <
-              </button>
-              <button type="button" class="btn btn-default" onclick="next_page_treinador();tabela_treinadores(num_pagina_treinador,procura_treinador);">
-              >
-              </button>
-              <button type="button" class="btn btn-default" onclick="last_page_treinador();tabela_treinadores(num_pagina_treinador,procura_treinador);">
-              >>
-              </button> 
-            </div>
-            <div class="col-md-4 col-sm-4" align="right">
-              <button type="button" onclick="toogle_mostrar_treinadores()" class="btn btn-default">Mostrar/Esconder Atletas selecionados</button>
-            </div>
           </div>
+
+            <div class="form-row">
+              <div class="col-md-8 col-sm-8">
+                <button type="button" class="btn btn-default" onclick="first_page_treinador();tabela_treinadores(num_pagina_treinador,procura_treinador); ">
+                <<
+                </button>
+                <button type="button" class="btn btn-default" onclick="prev_page_treinador();tabela_treinadores(num_pagina_treinador,procura_treinador);">
+                <
+                </button>
+                <button type="button" class="btn btn-default" onclick="next_page_treinador();tabela_treinadores(num_pagina_treinador,procura_treinador);">
+                >
+                </button>
+                <button type="button" class="btn btn-default" onclick="last_page_treinador();tabela_treinadores(num_pagina_treinador,procura_treinador);">
+                >>
+                </button> 
+              </div>
+
+              <div class="col-md-4 col-sm-4" align="right">
+                <button type="button" onclick="toogle_mostrar_treinadores()" class="btn btn-default">Mostrar/Esconder Atletas selecionados</button>
+              </div>
+            </div>
           <div id="container_treinadores">
             <hr>
             <div>

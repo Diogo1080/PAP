@@ -45,7 +45,6 @@
   }
 
   if (isset($_POST['insert'])) {
-    print_r($_POST['tipo_contribuinte']);
     //prepara o insert do contribuinte
       $insert_contribuinte=$con->prepare("INSERT INTO `contribuintes`(`foto`, `num_socio`, `password`,`cc`, `nif`, `telemovel`, `telefone`, `cp`, `receber_email`, `tipo_contribuinte`, `morada`, `localidade`, `freguesia`, `concelho`, `nome`, `sexo`, `email`, `metodo_pagamento`, `dt_nasc`, `mensalidade_valor`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
@@ -888,7 +887,7 @@
                   J
                 </div>
               </div>
-              <input class="form-control  input_socio selects" name="num_atleta[]" maxlength="10" onkeypress="return sonumeros(event)" value="<?php 
+              <input class="form-control selects" name="num_atleta[]" maxlength="10" onkeypress="return sonumeros(event)" value="<?php 
                 if (isset($_GET['id_contribuinte'])) {
                   $num=explode("J",$linha['num_socio']);
                   echo (end($num));
@@ -904,7 +903,7 @@
             <?php }else{ ?>
               <label>Palavra-passe:</label>
             <?php } ?>
-              <input class="form-control input_socio selects" id="password" type="password" name="password_atleta">
+              <input class="form-control selects" id="password" type="password" name="password_atleta">
           </div>
         </div>
         <!--Valor da mensalidade e da joia-->
@@ -1678,7 +1677,7 @@
   //Função de escolher a imagem do encarregado de educação consuante o sexo
     function mudar_imagem_enc(){
       if ((document.getElementById("foto_enc").value=='')) {
-        if (document.getElementById('sexo_contribuinte_enc').value=="Masculino") {
+        if (document.getElementById('sexo_enc').value=="Masculino") {
           document.getElementById('foto_place_enc').src="fotos/Male_user.png"
         }else{
           document.getElementById('foto_place_enc').src="fotos/Female_user.png"

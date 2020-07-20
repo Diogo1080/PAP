@@ -12,7 +12,7 @@
 			$atletas=$con->prepare("
 				SELECT atletas.id_atleta,contribuintes.nome FROM contribuintes 
 				INNER JOIN atletas ON contribuintes.id_contribuinte=atletas.id_contribuinte 
-				INNER JOIN atletas_escaloes ON atletas.id_atleta=atletas_escaloes.id_atleta
+				LEFT JOIN atletas_escaloes ON atletas.id_atleta=atletas_escaloes.id_atleta
 			");
 		}else{
 			$atletas=$con->prepare("
@@ -63,7 +63,7 @@
 			$atletas=$con->prepare("
 				SELECT atletas.id_atleta,contribuintes.nome FROM contribuintes 
 				INNER JOIN atletas ON contribuintes.id_contribuinte=atletas.id_contribuinte 
-				INNER JOIN atletas_escaloes ON atletas.id_atleta=atletas_escaloes.id_atleta
+				LEFT JOIN atletas_escaloes ON atletas.id_atleta=atletas_escaloes.id_atleta
 				LIMIT $offset,$registos_por_pagina
 			");
 		}else{
@@ -104,8 +104,12 @@
 						echo '<tr>';
 							if ($_POST['equipa']=="T"){
 								echo '<td>'.$linha['nome'].'</td>';
-								if ($linha_equipa['atual']<>0) {
-									echo '<td>'.$linha_equipa['nome'].'</td>';
+								if (isset($linha_equipa['atual'])){
+									if ($linha_equipa['atual']<>0) {
+										echo '<td>'.$linha_equipa['nome'].'</td>';
+									}else{
+										echo '<td>Não têm equipa</td>';
+									}
 								}else{
 									echo '<td>Não têm equipa</td>';
 								}
@@ -120,6 +124,7 @@
 										echo '<input type="checkbox" onclick="selecionar_atleta(\'1\',\''.$linha['id_atleta'].'\',\''.$linha['nome'].'\');">';
 									}
 								echo '</td>';
+							
 							}elseif ($_POST['equipa']=="S") {
 								if ($equipa_atleta->affected_rows==0 || $linha_equipa['atual']==0) {
 									echo '<td>'.$linha['nome'].'</td>';
