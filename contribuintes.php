@@ -153,7 +153,7 @@
                 }
 
               //Prepara os dados para insert do enc_edu.
-                $insert_contribuinte->bind_param("bssiiiiiissssssssssd",$foto,$null,$null,$_POST['cc_enc'],$_POST['nif_enc'],$_POST['telemovel_enc'],$_POST['telefone_enc'],$cp_enc,$receber_email_enc,$_POST['tipo_enc'],$_POST['morada_enc'],$_POST['localidade_enc'],$_POST['freguesia_enc'],$_POST['concelho_enc'],$_POST['nome_enc'],$_POST['sexo_enc'],$_POST['email_enc'],$null,$_POST['dt_nasc_enc'],$null,);
+                $insert_contribuinte->bind_param("bssiiiiiissssssssssd",$foto,$null,$null,$_POST['cc_enc'],$_POST['nif_enc'],$_POST['telemovel_enc'],$_POST['telefone_enc'],$cp_enc,$receber_email_enc,$_POST['tipo_enc'],$_POST['morada_enc'],$_POST['localidade_enc'],$_POST['freguesia_enc'],$_POST['concelho_enc'],$_POST['nome_enc'],$_POST['sexo_enc'],$_POST['email_enc'],$null,$_POST['dt_nasc_enc'],$null);
               //Verifica se tem foto se sim coloca a selecionada
               //Se nao coloca-a pelo sexo.
                 if (is_uploaded_file($_FILES["foto_enc"]["tmp_name"])){
